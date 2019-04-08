@@ -14,7 +14,7 @@ Generated at {{.LastUpdate}}
 <tbody>
 {{range $.Repositories}}
 <tr>
-<td><b>{{.Name}}</b></td></td>
+<td><b><a href="{{.URL}}/commit/{{.Commit}}">{{.Name}}</a></b></td></td>
 <td>
 <table class="table table-sm table-hover small">
 <thead>
