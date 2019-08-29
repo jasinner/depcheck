@@ -1,6 +1,6 @@
 FROM openshift/origin-cli:latest
 
-FROM registry.svc.ci.openshift.org/openshift/release:golang-1.11 AS builder
+FROM docker.io/openshift/origin-release:golang-1.11 AS builder
 WORKDIR /go/src/github.com/jasinner/depcheck
 COPY . .
 ENV GO_PACKAGE github.com/jasinner/depcheck
