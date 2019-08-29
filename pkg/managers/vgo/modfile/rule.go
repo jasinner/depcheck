@@ -15,8 +15,8 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/mfojtik/depcheck/pkg/managers/vgo/module"
-	"github.com/mfojtik/depcheck/pkg/managers/vgo/semver"
+	"github.com/jasinner/depcheck/pkg/managers/vgo/module"
+	"github.com/jasinner/depcheck/pkg/managers/vgo/semver"
 )
 
 // A File is the parsed, interpreted form of a go.mod file.

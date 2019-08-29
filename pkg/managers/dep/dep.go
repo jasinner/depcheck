@@ -1,15 +1,17 @@
 package dep
 
 import (
+	"fmt"
 	"strings"
 
-	"github.com/mfojtik/depcheck/pkg/managers/version"
+	"github.com/jasinner/depcheck/pkg/managers/version"
 )
 
 func ParseManifest(manifest map[string][]byte) ([]version.Dependency, error) {
 	lock, err := readLock(manifest["Gopkg.lock"])
 	if err != nil {
-		return nil, err
+		fmt.Println("Skipping dependencies in unparsable Gopkg.lock")
+		return nil, nil
 	}
 	list := []version.Dependency{}
 	for _, p := range lock.Projects {

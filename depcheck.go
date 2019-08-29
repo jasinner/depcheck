@@ -13,9 +13,9 @@ import (
 
 	"k8s.io/apimachinery/pkg/util/wait"
 
-	"github.com/mfojtik/depcheck/pkg/managers"
-	"github.com/mfojtik/depcheck/pkg/payload"
-	"github.com/mfojtik/depcheck/pkg/render"
+	"github.com/jasinner/depcheck/pkg/managers"
+	"github.com/jasinner/depcheck/pkg/payload"
+	"github.com/jasinner/depcheck/pkg/render"
 )
 
 func main() {
@@ -26,7 +26,7 @@ func main() {
 	go func() {
 		wait.Forever(func() {
 			fmt.Println("Updating dependency report ...")
-			if err := updatePayloadJSON(payloadFile); err != nil {
+			if err := updatePayloadJSON(payloadFile, os.Args[1]); err != nil {
 				fmt.Printf("Error updating payload: %v\n", err)
 				return
 			}
@@ -51,10 +51,11 @@ func main() {
 	}
 }
 
-func updatePayloadJSON(payloadFile string) error {
-	out, err := exec.Command("oc", "adm", "release", "info", "--commits", "registry.svc.ci.openshift.org/openshift/origin-release:v4.0", "-o", "json").Output()
+func updatePayloadJSON(payloadFile string, releaseImage string) error {
+	out, err := exec.Command("oc", "adm", "release", "info", "--commits", releaseImage, "-o", "json").CombinedOutput()
 	if err != nil {
-		return fmt.Errorf("(%v): %s", err, string(out))
+		fmt.Printf("(%v): %s", err, string(out))
+		os.Exit(1)
 	}
 	return ioutil.WriteFile(payloadFile, out, os.ModePerm)
 }
